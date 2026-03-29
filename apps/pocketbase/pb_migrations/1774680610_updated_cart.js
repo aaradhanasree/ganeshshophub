@@ -1,34 +1,20 @@
 /// <reference path="../pb_data/types.d.ts" />
-migrate((app) => {
-  const collection = app.findCollectionByNameOrId("pbc_1784001001")
-
-  // update field
-  collection.fields.addAt(2, new Field({
-    "hidden": false,
-    "id": "json1784001002",
-    "maxSize": 0,
-    "name": "items",
-    "presentable": false,
-    "required": false,
-    "system": false,
-    "type": "json"
-  }))
-
-  return app.save(collection)
-}, (app) => {
-  const collection = app.findCollectionByNameOrId("pbc_1784001001")
-
-  // update field
-  collection.fields.addAt(2, new Field({
-    "hidden": false,
-    "id": "json1784001002",
-    "maxSize": 0,
-    "name": "items",
-    "presentable": false,
-    "required": true,
-    "system": false,
-    "type": "json"
-  }))
-
-  return app.save(collection)
-})
+migrate((db) => {
+  const dao = new Dao(db);
+  const collection = dao.findCollectionByNameOrId("pbc_1784001001");
+  const schema = collection.schema;
+  const itemsField = schema.getFieldById("json1784001002");
+  if (itemsField) {
+    itemsField.required = false;
+  }
+  return dao.saveCollection(collection);
+}, (db) => {
+  const dao = new Dao(db);
+  const collection = dao.findCollectionByNameOrId("pbc_1784001001");
+  const schema = collection.schema;
+  const itemsField = schema.getFieldById("json1784001002");
+  if (itemsField) {
+    itemsField.required = true;
+  }
+  return dao.saveCollection(collection);
+});

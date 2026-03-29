@@ -1,20 +1,12 @@
 /// <reference path="../pb_data/types.d.ts" />
-migrate((app) => {
-  const collection = app.findCollectionByNameOrId("pbc_1784000001")
-
-  // update collection data
-  unmarshal({
-    "updateRule": "@request.auth.id != \"\""
-  }, collection)
-
-  return app.save(collection)
-}, (app) => {
-  const collection = app.findCollectionByNameOrId("pbc_1784000001")
-
-  // update collection data
-  unmarshal({
-    "updateRule": null
-  }, collection)
-
-  return app.save(collection)
-})
+migrate((db) => {
+  const dao = new Dao(db);
+  const collection = dao.findCollectionByNameOrId("pbc_1784000001");
+  collection.updateRule = "@request.auth.id != \"\"";
+  return dao.saveCollection(collection);
+}, (db) => {
+  const dao = new Dao(db);
+  const collection = dao.findCollectionByNameOrId("pbc_1784000001");
+  collection.updateRule = null;
+  return dao.saveCollection(collection);
+});
