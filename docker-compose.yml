@@ -1,8 +1,9 @@
-version: '3.8'
-
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ganeshshophub-app:latest
     container_name: ganeshshophub
     restart: always
     ports:
