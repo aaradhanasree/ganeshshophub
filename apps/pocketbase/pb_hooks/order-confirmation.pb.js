@@ -1,5 +1,5 @@
-//// <reference path="../pb_data/types.d.ts" />
-onRecordAfterCreateSuccess((e) => {
+/// <reference path="../pb_data/types.d.ts" />
+onRecordAfterCreateRequest((e) => {
   try {
     const message = new MailerMessage({
       from: {
@@ -12,7 +12,7 @@ onRecordAfterCreateSuccess((e) => {
             "<p><strong>Order ID:</strong> " + e.record.id + "</p>" +
             "<p><strong>Items:</strong></p>" +
             "<pre>" + JSON.stringify(e.record.get("items"), null, 2) + "</pre>" +
-            "<p><strong>Total:</strong> \u20b9" + e.record.get("totalAmount") + "</p>" +
+            "<p><strong>Total:</strong> &#8377;" + e.record.get("totalAmount") + "</p>" +
             "<p><strong>Payment Method:</strong> " + (e.record.get("paymentMethod") || "N/A") + "</p>" +
             "<p><strong>Shipping Address:</strong></p>" +
             "<pre>" + e.record.get("shippingAddress") + "</pre>" +
@@ -22,5 +22,4 @@ onRecordAfterCreateSuccess((e) => {
   } catch (err) {
     console.log("Order confirmation email failed:", err);
   }
-  e.next();
 }, "orders");

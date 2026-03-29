@@ -1,5 +1,5 @@
-//// <reference path="../pb_data/types.d.ts" />
-onRecordAfterCreateSuccess((e) => {
+/// <reference path="../pb_data/types.d.ts" />
+onRecordAfterCreateRequest((e) => {
   try {
     const message = new MailerMessage({
       from: {
@@ -17,7 +17,6 @@ onRecordAfterCreateSuccess((e) => {
     });
     $app.newMailClient().send(message);
   } catch (err) {
-    console.log('welcome-email hook skipped:', err);
+    console.log("Welcome email failed:", err);
   }
-  e.next();
 }, "users");

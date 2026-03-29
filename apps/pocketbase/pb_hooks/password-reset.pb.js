@@ -1,10 +1,7 @@
-//// <reference path="../pb_data/types.d.ts" />
-onRecordUpdate((e) => {
-  const passwordChanged = e.record.get("password") !== e.record.original().get("password");
-  
-  if (passwordChanged) {
-    try {
-      const message = new MailerMessage({
+/// <reference path="../pb_data/types.d.ts" />
+onRecordAfterUpdateRequest((e) => {
+  try {
+    const message = new MailerMessage({
       from: {
         address: $app.settings().meta.senderAddress,
         name: $app.settings().meta.senderName
@@ -24,9 +21,7 @@ onRecordUpdate((e) => {
             "<p>Thank you for keeping your account secure!</p>"
     });
     $app.newMailClient().send(message);
-    } catch (err) {
-      console.log("Password reset email failed:", err);
-    }
+  } catch (err) {
+    console.log("Password reset email failed:", err);
   }
-  e.next();
 }, "users");

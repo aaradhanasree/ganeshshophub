@@ -1,9 +1,9 @@
-//// <reference path="../pb_data/types.d.ts" />
-onRecordAfterUpdateSuccess((e) => {
+/// <reference path="../pb_data/types.d.ts" />
+onRecordAfterUpdateRequest((e) => {
   try {
     const status = e.record.get("status");
     const originalStatus = e.record.original().get("status");
-    
+
     if (status !== originalStatus && (status === "processing" || status === "shipped" || status === "delivered")) {
       const message = new MailerMessage({
         from: {
@@ -24,5 +24,4 @@ onRecordAfterUpdateSuccess((e) => {
   } catch (err) {
     console.log("Order status update email failed:", err);
   }
-  e.next();
 }, "orders");

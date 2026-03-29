@@ -1,5 +1,5 @@
-//// <reference path="../pb_data/types.d.ts" />
-onRecordAfterDeleteSuccess((e) => {
+/// <reference path="../pb_data/types.d.ts" />
+onRecordAfterDeleteRequest((e) => {
   try {
     const message = new MailerMessage({
       from: {
@@ -12,7 +12,7 @@ onRecordAfterDeleteSuccess((e) => {
             "<p><strong>Order ID:</strong> " + e.record.id + "</p>" +
             "<p>Your order has been successfully cancelled.</p>" +
             "<p><strong>Refund Information:</strong></p>" +
-            "<p>Your refund of \u20b9" + e.record.get("totalAmount") + " will be processed to your original payment method within 5-7 business days.</p>" +
+            "<p>Your refund of &#8377;" + e.record.get("totalAmount") + " will be processed to your original payment method within 5-7 business days.</p>" +
             "<p>If you have any questions about your cancellation or refund, please contact our support team.</p>" +
             "<p>We hope to see you again soon!</p>"
     });
@@ -20,5 +20,4 @@ onRecordAfterDeleteSuccess((e) => {
   } catch (err) {
     console.log("Order cancellation email failed:", err);
   }
-  e.next();
 }, "orders");
