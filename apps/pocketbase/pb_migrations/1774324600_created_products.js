@@ -1,11 +1,16 @@
 /// <reference path="../pb_data/types.d.ts" />
 migrate((app) => {
   const collection = new Collection({
-    "createRule": "@request.auth.id != \"\"",
-    "deleteRule": "@request.auth.id != \"\"",
-    "updateRule": "@request.auth.id != \"\"",
+    "id": "pbc_4092854851",
+    "name": "products",
+    "type": "base",
+    "system": false,
     "listRule": "",
     "viewRule": "",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": "@request.auth.role = \"admin\"",
+    "deleteRule": "@request.auth.id != \"\"",
+    "indexes": [],
     "fields": [
       {
         "autogeneratePattern": "[a-z0-9]{15}",
@@ -161,20 +166,11 @@ migrate((app) => {
         "system": false,
         "type": "autodate"
       }
-    ],
-    "id": "pbc_4092854851",
-    "indexes": [],
-    "listRule": "",
-    "name": "products",
-    "system": false,
-    "type": "base",
-    "updateRule": "@request.auth.role = \"admin\"",
-    "viewRule": ""
+    ]
   });
 
-  return app.save(collection);
+  app.save(collection);
 }, (app) => {
   const collection = app.findCollectionByNameOrId("pbc_4092854851");
-
-  return app.delete(collection);
-})
+  app.delete(collection);
+});
